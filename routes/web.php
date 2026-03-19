@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/surgical-cases/{surgicalCase}/complete', [SurgicalCaseController::class, 'complete'])->name('surgical-case.complete');
     Route::post('/surgical-cases/{surgicalCase}/cancel', [SurgicalCaseController::class, 'cancel'])->name('surgical-case.cancel');
     Route::post('/surgical-cases/{surgicalCase}/postpone', [SurgicalCaseController::class, 'postpone'])->name('surgical-case.postpone');
+    Route::get('/surgical-cases/export', [SurgicalCaseController::class, 'export'])->name('surgical-case.export');
     Route::post('/surgical-cases/{surgicalCase}/metrics', [SurgicalCaseController::class, 'addMetric'])->name('surgical-case.addMetric');
 });
 

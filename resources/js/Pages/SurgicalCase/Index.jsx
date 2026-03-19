@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
@@ -43,8 +44,8 @@ export default function SurgicalCaseIndex({ cases, fbUs, filters }) {
         return new Date(dateString).toLocaleString();
     };
 
-    const getExportRows = () =>
-        cases.data.map((caseItem) => ({
+    const buildExportRows = (data) =>
+        data.map((caseItem) => ({
             'Case #': caseItem.case_number,
             Patient: caseItem.patient_name,
             FBU: caseItem.fbu?.name || '',
@@ -54,8 +55,17 @@ export default function SurgicalCaseIndex({ cases, fbUs, filters }) {
             'Performance Score': caseItem.performance_score ? caseItem.performance_score.toFixed(1) : '',
         }));
 
-    const exportToExcel = () => {
-        const worksheet = XLSX.utils.json_to_sheet(getExportRows());
+    const fetchAllCasesForExport = async () => {
+        const response = await axios.get(route('surgical-case.export'), {
+            params: { search, status, fbu_id: fbuId },
+        });
+
+        return response.data;
+    };
+
+    const exportToExcel = async () => {
+        const allCases = await fetchAllCasesForExport();
+        const worksheet = XLSX.utils.json_to_sheet(buildExportRows(allCases));
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Cases');
 
@@ -63,11 +73,12 @@ export default function SurgicalCaseIndex({ cases, fbUs, filters }) {
         XLSX.writeFile(workbook, filename);
     };
 
-    const exportToPdf = () => {
-        const doc = new jsPDF();
-        const rows = getExportRows();
+    const exportToPdf = async () => {
+        const allCases = await fetchAllCasesForExport();
+        const rows = buildExportRows(allCases);
         const headers = rows.length ? Object.keys(rows[0]) : [];
 
+        const doc = new jsPDF();
         doc.text('Surgical Cases', 14, 16);
         doc.autoTable({
             startY: 22,

@@ -16,10 +16,13 @@ export default function Register() {
     }
 
     return (
-        <Guest title="Create your account">
+        <Guest title="Create a new account">
             <form onSubmit={submit} className="space-y-6">
+                {/* Name Field */}
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Name
+                    </label>
                     <div className="mt-1">
                         <input
                             id="name"
@@ -27,15 +30,22 @@ export default function Register() {
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                             required
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Your full name"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                            placeholder="John Doe"
                         />
                     </div>
-                    {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name}</p>}
+                    {errors.name && (
+                        <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                            {errors.name}
+                        </p>
+                    )}
                 </div>
 
+                {/* Email Field */}
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Email
+                    </label>
                     <div className="mt-1">
                         <input
                             id="email"
@@ -43,15 +53,22 @@ export default function Register() {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             required
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                             placeholder="you@example.com"
                         />
                     </div>
-                    {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
+                    {errors.email && (
+                        <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                            {errors.email}
+                        </p>
+                    )}
                 </div>
 
+                {/* Password Field */}
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Password
+                    </label>
                     <div className="mt-1">
                         <input
                             id="password"
@@ -59,15 +76,22 @@ export default function Register() {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             required
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Create a password"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                            placeholder="Enter your password"
                         />
                     </div>
-                    {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password}</p>}
+                    {errors.password && (
+                        <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                            {errors.password}
+                        </p>
+                    )}
                 </div>
 
+                {/* Confirm Password Field */}
                 <div>
-                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Confirm Password
+                    </label>
                     <div className="mt-1">
                         <input
                             id="password_confirmation"
@@ -75,25 +99,32 @@ export default function Register() {
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             required
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Re-enter your password"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                            placeholder="Confirm your password"
                         />
                     </div>
-                    {errors.password_confirmation && <p className="mt-2 text-sm text-red-600">{errors.password_confirmation}</p>}
                 </div>
 
+                {/* Submit Button */}
                 <div>
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
                     >
-                        Create account
+                        {processing ? 'Creating account...' : 'Register'}
                     </button>
                 </div>
 
-                <div className="text-sm text-center">
-                    Already have an account? <Link href={route('login')} className="font-medium text-indigo-600 hover:text-indigo-500">Sign in</Link>
+                {/* Login Link */}
+                <div className="text-sm text-center text-gray-600 dark:text-gray-400">
+                    Already have an account?{' '}
+                    <Link 
+                        href={route('login')} 
+                        className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    >
+                        Sign in
+                    </Link>
                 </div>
             </form>
         </Guest>

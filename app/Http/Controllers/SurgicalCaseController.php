@@ -172,6 +172,29 @@ class SurgicalCaseController extends Controller
     }
 
     /**
+     * Export surgical cases (all matching current filters)
+     */
+    public function export(Request $request)
+    {
+        $cases = SurgicalCase::query()
+            ->with('fbu')
+            ->when($request->search, function ($query, $search) {
+                return $query->where('patient_name', 'like', "%{$search}%")
+                    ->orWhere('case_number', 'like', "%{$search}%");
+            })
+            ->when($request->status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->when($request->fbu_id, function ($query, $fbuId) {
+                return $query->where('fbu_id', $fbuId);
+            })
+            ->orderBy('scheduled_start_time', 'desc')
+            ->get();
+
+        return response()->json($cases);
+    }
+
+    /**
      * Add a performance metric to a case
      */
     public function addMetric(SurgicalCase $surgicalCase, Request $request)
