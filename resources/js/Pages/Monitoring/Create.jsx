@@ -221,7 +221,7 @@ export default function MonitoringCreate({ location, systemType }) {
                                             type="file"
                                             id="backup_file"
                                             onChange={handleFileChange}
-                                            accept=".zip,.sql,.backup,.gz,.tar,.sqlite"
+                                            accept=".zip,.sql,.backup,.gz,.tar,.sqlite,.bak"
                                             className="file-input"
                                         />
                                         <label htmlFor="backup_file" className="file-upload-label">
@@ -286,7 +286,7 @@ export default function MonitoringCreate({ location, systemType }) {
                                     )}
 
                                     <div className="form-hint">
-                                        Allowed files: ZIP, SQL, BACKUP, GZ, TAR, SQLite (max 100MB)
+                                        Allowed files: ZIP, SQL, BACKUP, GZ, TAR, SQLite, .bak (max 100MB)
                                     </div>
                                     {errors.backup_file && (
                                         <div className="form-error">{errors.backup_file}</div>

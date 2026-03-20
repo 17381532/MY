@@ -5,7 +5,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
-            <Head title="Welcome - MediMonitor" />
+            <Head title="Register Monitoring Portal" />
             <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
                 {/* Navigation */}
                 <nav className="absolute top-0 right-0 p-6">
