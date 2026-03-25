@@ -6,9 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+
+            // Custom columns from the original file
             $table->string('employee_id')->nullable()->unique();
             $table->enum('department', ['IT', 'Clinical', 'Administration', 'Maintenance'])->nullable();
             $table->string('phone_number')->nullable();
@@ -19,22 +31,30 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('avatar')->nullable();
         });
+
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'employee_id',
-                'department',
-                'phone_number',
-                'shift',
-                'permissions',
-                'last_login_at',
-                'last_login_ip',
-                'is_active',
-                'avatar'
-            ]);
-        });
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('sessions');
     }
 };
